@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:nutriflow_app/models/comidas.dart';
 
 class NormalScreen extends StatelessWidget {
   const NormalScreen({super.key});
@@ -36,12 +37,22 @@ Future<Map<String, dynamic>> _cargarDatos() async {
             return const Center(child: CircularProgressIndicator());
           }
           final datos = snapshot.data!;
-          return ListView(
-            children: [
-              
-            ],
+         return ListView(
+            children: datos.entries.map((entry) {
+              String titulo = entry.key;
+              Map<String, dynamic> seccionComida = entry.value;
+
+              List<Comida> comidas = (seccionComida['items'] as List)
+                  .map((item) => Comida(
+                        nombre: item['nombre'],
+                        calorias: item['calorias'],
+                        cantidad: item['cantidad'],
+                      )).toList();
+
+           
+            }).toList(),
           );
-        }
+        },
       ),
     );
   }
