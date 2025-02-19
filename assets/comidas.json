@@ -1,0 +1,46 @@
+{
+    "diario": {
+      "desayuno": {
+        "total_calorias": 500,
+        "items": [
+          { "nombre": "Strawberries - Raw", "cantidad": "1 cup, halves", "calorias": 49 },
+          { "nombre": "1 Scrambled Egg White", "cantidad": "1 egg white", "calorias": 17 },
+          { "nombre": "Honey", "cantidad": "100 g", "calorias": 304 },
+          { "nombre": "Nonfat Greek Strained Yogurt", "cantidad": "1 cup (227 g)", "calorias": 130 }
+        ]
+      },
+      "almuerzo": {
+        "total_calorias": 577,
+        "items": [
+          { "nombre": "Cilantro Lime Vinaigrette Dressing", "cantidad": "2 TBSP", "calorias": 130 },
+          { "nombre": "Beans - Black, cooked, boiled, with salt", "cantidad": "1 cup", "calorias": 227 },
+          { "nombre": "100% Apple Juice", "cantidad": "1 cup", "calorias": 120 },
+          { "nombre": "Guacamole Medium", "cantidad": "", "calorias": 50 }
+        ]
+      },
+      "aperitivo": {
+        "total_calorias": 250,
+        "items": [
+          { "nombre": "Nueces", "cantidad": "30 g", "calorias": 180 },
+          { "nombre": "Queso bajo en grasa", "cantidad": "1 porción", "calorias": 70 }
+        ]
+      },
+      "merienda": {
+        "total_calorias": 320,
+        "items": [
+          { "nombre": "Yogur con frutas", "cantidad": "1 taza", "calorias": 150 },
+          { "nombre": "Galletas integrales", "cantidad": "3 unidades", "calorias": 170 }
+        ]
+      },
+      "cena": {
+        "total_calorias": 600,
+        "items": [
+          { "nombre": "Pechuga de pollo a la plancha", "cantidad": "150 g", "calorias": 250 },
+          { "nombre": "Ensalada mixta", "cantidad": "1 taza", "calorias": 100 },
+          { "nombre": "Pan integral", "cantidad": "1 rebanada", "calorias": 80 },
+          { "nombre": "Jugo de naranja", "cantidad": "1 vaso", "calorias": 170 }
+        ]
+      }
+    }
+  }
+  

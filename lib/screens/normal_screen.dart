@@ -5,7 +5,6 @@ class NormalScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Un color de ejemplo para el AppBar
     const Color primaryGreen = Color(0xFF2E7D32);
 
     return Scaffold(
