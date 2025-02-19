@@ -3,10 +3,10 @@ class Comida{
   final String cantidad;
   final int calorias;
 
-  Comida(this.nombre, this.cantidad, this.calorias);
+   Comida({required this.nombre, required this.calorias, required this.cantidad});
 
-  Comida.fromJson(Map<String, dynamic> json)
-      : nombre = json['nombre'],
+  Comida.fromJson(Map<String, dynamic> json): 
+        nombre = json['nombre'],
         cantidad = json['cantidad'],
         calorias = json['calorias'];
   
