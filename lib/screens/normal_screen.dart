@@ -12,7 +12,7 @@ class NormalScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: primaryGreen,
         title: const Text(
-          'Pantalla Normal',
+          'Pantalla principal',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
