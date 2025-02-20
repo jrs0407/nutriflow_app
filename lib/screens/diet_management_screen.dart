@@ -40,7 +40,8 @@ class _AdministrarDietaScreenState extends State<AdministrarDietaScreen> {
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Center(
+                    child: Container(
+                      alignment: Alignment.center,
                       child: Text(
                         value,
                         style: TextStyle(color: Colors.white),
