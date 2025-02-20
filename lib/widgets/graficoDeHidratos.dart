@@ -74,10 +74,10 @@ class _GraficodehidratosState extends State<Graficodehidratos> {
         child: chartData.isEmpty
             ? const CircularProgressIndicator()
             : SfCircularChart(
-                title: ChartTitle(
+                title: const ChartTitle(
                     text:
                         "Relación de Calorías, Grasas y Proteínas con Hidratos (%)"),
-                legend: Legend(
+                legend: const Legend(
                   isVisible: true,
                   position: LegendPosition.bottom,
                   overflowMode: LegendItemOverflowMode.wrap,

@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:nutriflow_app/models/hidratos_de_carbono.dart';
 import 'package:nutriflow_app/widgets/comidaCard.dart';
 import 'package:nutriflow_app/models/comidas.dart';
-import 'package:nutriflow_app/widgets/graficodehidratos.dart';
+//import 'package:nutriflow_app/widgets/graficodehidratos.dart';
 
 class NormalScreen extends StatelessWidget {
   const NormalScreen({super.key});
@@ -19,12 +19,13 @@ class NormalScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Row(
+        backgroundColor: Colors.green, 
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center, 
           children: [
-            Icon(Icons.menu),
-            SizedBox(width: 10),
-            Text('Diario'),
-            Padding(
+            Expanded(child: Container()),
+            const Text('Diario'),
+            const Padding(
               padding: EdgeInsets.all(8.0),
               child: CircleAvatar(
                 child: Text('JC'),
@@ -33,51 +34,60 @@ class NormalScreen extends StatelessWidget {
             ),
           ],
         ),
-        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () {
+            },
+          ),
+        ],
       ),
-      body: FutureBuilder<Map<String, dynamic>>(
-        future: _cargarDatos(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          final datos = snapshot.data!;
+      body: Container(
+        color: Colors.green.shade100, 
+        child: FutureBuilder<Map<String, dynamic>>(
+          future: _cargarDatos(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            final datos = snapshot.data!;
 
-          return Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  children: datos.entries.map((entry) {
-                    String titulo = entry.key;
-                    Map<String, dynamic> seccionComida = entry.value;
+            return Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    children: datos.entries.map((entry) {
+                      String titulo = entry.key;
+                      Map<String, dynamic> seccionComida = entry.value;
 
-                    List<Comida> comidas = (seccionComida['items'] as List)
-                        .map((item) => Comida(
-                              nombre: item['nombre'],
-                              calorias: item['calorias'],
-                              cantidad: item['cantidad'],
-                              grasas: item['grasas'],
-                              proteinas: item['proteinas'],
-                            ))
-                        .toList();
+                      List<Comida> comidas = (seccionComida['items'] as List)
+                          .map((item) => Comida(
+                                nombre: item['nombre'],
+                                calorias: item['calorias'],
+                                cantidad: item['cantidad'],
+                                grasas: item['grasas'],
+                                proteinas: item['proteinas'],
+                              ))
+                          .toList();
 
-                    HidratosDeCarbono hidratos = HidratosDeCarbono(
-                      total_calorias: seccionComida['total_calorias'],
-                      total_grasas: seccionComida['total_grasas'].toDouble(),
-                      total_proteinas: seccionComida['total_proteinas'].toDouble(),
-                      total_hidratos: seccionComida['total_hidratos'].toDouble(),
-                    );
+                      HidratosDeCarbono hidratos = HidratosDeCarbono(
+                        total_calorias: seccionComida['total_calorias'],
+                        total_grasas: seccionComida['total_grasas'].toDouble(),
+                        total_proteinas: seccionComida['total_proteinas'].toDouble(),
+                        total_hidratos: seccionComida['total_hidratos'].toDouble(),
+                      );
 
-                    return Comidacard(titulo: titulo, hidratos: hidratos, comidas: comidas);
-                  }).toList(),
+                      return Comidacard(titulo: titulo, hidratos: hidratos, comidas: comidas);
+                    }).toList(),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20), 
-              const Center(child: Graficodehidratos()), 
-              const SizedBox(height: 20), 
-            ],
-          );
-        },
+                /*const SizedBox(height: 20), 
+                const Center(child: Graficodehidratos()), 
+                const SizedBox(height: 20), */
+              ],
+            );
+          },
+        ),
       ),
     );
   }

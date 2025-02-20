@@ -1,16 +1,14 @@
-
 import 'package:flutter/material.dart';
 import 'package:nutriflow_app/models/comidas.dart';
 import 'package:nutriflow_app/models/hidratos_de_carbono.dart';
 
 class Comidacard extends StatelessWidget {
   const Comidacard(
-      {
-      super.key,
+      {super.key,
       required this.titulo,
       required this.hidratos,
-      required this.comidas
-      });
+      required this.comidas});
+  
   final String titulo;
   final HidratosDeCarbono hidratos;
   final List<Comida> comidas;
@@ -24,13 +22,40 @@ class Comidacard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "$titulo - total_calorias ${hidratos.total_calorias} cal",
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-             Text(
-              "Grasas: ${hidratos.total_grasas} g | Proteínas: ${hidratos.total_proteinas} g | Hidratos: ${hidratos.total_hidratos} g",
-              style: const TextStyle(color: Colors.grey),
+            Container(
+              width: double.infinity, 
+              color: Colors.green,
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween, 
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "$titulo - total_calorias ${hidratos.total_calorias} cal",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Colors.white, 
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        "Grasas: ${hidratos.total_grasas} g | Proteínas: ${hidratos.total_proteinas} g | Hidratos: ${hidratos.total_hidratos} g",
+                        style: const TextStyle(
+                          color: Colors.white, 
+                        ),
+                      ),
+                    ],
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.add, color: Colors.white), 
+                    onPressed: () {
+                    },
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 8),
             Column(
