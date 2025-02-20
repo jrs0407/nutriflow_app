@@ -1,0 +1,2 @@
+C:/Users/Usuario/Desktop/FP/PMDMO/nutriflow_app/android/app/.cxx/Debug/422q2u60/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/Usuario/Desktop/FP/PMDMO/nutriflow_app/android/app/.cxx/Debug/422q2u60/arm64-v8a/CMakeFiles/rebuild_cache.dir
