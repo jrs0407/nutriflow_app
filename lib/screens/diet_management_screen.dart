@@ -36,7 +36,7 @@ class _AdministrarDietaScreenState extends State<AdministrarDietaScreen> {
                 isExpanded: true,
                 value: selectedMeal,
                 dropdownColor: Color.fromARGB(255, 92, 136, 92),
-                items: <String>['Desayuno', 'Almuerzo', 'Merienda', 'Cena']
+                items: <String>['Desayuno','Media Mañana', 'Almuerzo', 'Merienda', 'Cena']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
