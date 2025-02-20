@@ -24,11 +24,16 @@ class NormalScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center, 
           children: [
             Expanded(child: Container()),
-            const Text('Diario'),
+            const Text(
+              'Diario',
+              style: TextStyle(
+                color: Colors.white, 
+              ),
+            ),
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: CircleAvatar(
-                child: Text('JC'),
+                child: Text('JC', style: TextStyle(color: Colors.white)), 
                 backgroundColor: Colors.green,
               ),
             ),
@@ -36,9 +41,8 @@ class NormalScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {
-            },
+            icon: const Icon(Icons.menu, color: Colors.white), 
+            onPressed: () {},
           ),
         ],
       ),
