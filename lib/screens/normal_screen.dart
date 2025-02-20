@@ -50,6 +50,8 @@ class NormalScreen extends StatelessWidget {
                         nombre: item['nombre'],
                         calorias: item['calorias'],
                         cantidad: item['cantidad'],
+                        grasas: item['grasas'],
+                        proteinas: item['proteinas'],
                       ))
                   .toList();
 
@@ -67,8 +69,7 @@ class NormalScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Column(
-                        children: comidas
-                            .map((comida) => Padding(
+                        children: comidas.map((comida) => Padding(
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 4.0),
                                   child: Row(
@@ -97,6 +98,7 @@ class NormalScreen extends StatelessWidget {
                                             fontWeight: FontWeight.bold,
                                             color: Colors.red),
                                       ),
+                                      
                                     ],
                                   ),
                                 ))
