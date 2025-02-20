@@ -18,12 +18,15 @@ class _AdministrarDietaScreenState extends State<AdministrarDietaScreen> {
     {'nombre': 'Aguacate', 'calorias': 160, 'medida': '100 g'},
   ];
 
-  String? selectedMeal = 'desayuno';
+  String? selectedMeal = 'Desayuno';
+  final Color primaryGreen = Color(0xFF2E7D32);
+  final Color buttonDarkGreen = Color.fromARGB(255, 187, 235, 189);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: primaryGreen,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -32,15 +35,15 @@ class _AdministrarDietaScreenState extends State<AdministrarDietaScreen> {
               child: DropdownButton<String>(
                 isExpanded: true,
                 value: selectedMeal,
-                dropdownColor: const Color.fromARGB(255, 175, 233, 190),
-                items: <String>['desayuno', 'almuerzo', 'merienda', 'cena']
+                dropdownColor: Color.fromARGB(255, 92, 136, 92),
+                items: <String>['Desayuno', 'Almuerzo', 'Merienda', 'Cena']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Center(
                       child: Text(
                         value,
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   );
@@ -50,18 +53,26 @@ class _AdministrarDietaScreenState extends State<AdministrarDietaScreen> {
                     selectedMeal = newValue;
                   });
                 },
+                icon: Icon(Icons.arrow_drop_down, color: Colors.white),
               ),
             ),
           ],
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
       ),
-      body: Padding(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFFE8F5E9), Color(0xFFC8E6C9)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,6 +96,10 @@ class _AdministrarDietaScreenState extends State<AdministrarDietaScreen> {
                   child: Container(
                     height: 80,
                     child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: buttonDarkGreen,
+                        foregroundColor: Colors.black,
+                      ),
                       onPressed: () {},
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -97,7 +112,8 @@ class _AdministrarDietaScreenState extends State<AdministrarDietaScreen> {
                           Text(
                             'Escanear un código de barras',
                             textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 14),
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -109,8 +125,12 @@ class _AdministrarDietaScreenState extends State<AdministrarDietaScreen> {
                   child: Container(
                     height: 80,
                     child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: buttonDarkGreen,
+                        foregroundColor: Colors.black,
+                      ),
                       onPressed: () {
-                        mostrarAgregarAlimentoDialog(context); 
+                        mostrarAgregarAlimentoDialog(context);
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -123,7 +143,10 @@ class _AdministrarDietaScreenState extends State<AdministrarDietaScreen> {
                           Text(
                             'Adición rápida',
                             textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 14),
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ],
                       ),
@@ -182,10 +205,12 @@ class _AdministrarDietaScreenState extends State<AdministrarDietaScreen> {
                 onChanged: (value) {
                   quantity = value;
                   if (value.isEmpty) {
-                    errorMessage = 'Por favor, ingresa una cantidad.';
+                    errorMessage = 'Por favor, ing resa una cantidad.';
                   } else {
                     int? parsedQuantity = int.tryParse(value);
-                    if (parsedQuantity == null || parsedQuantity <= 0 || parsedQuantity >= 999) {
+                    if (parsedQuantity == null ||
+                        parsedQuantity <= 0 ||
+                        parsedQuantity >= 999) {
                       errorMessage = 'La cantidad debe estar entre 1 y 998.';
                     } else {
                       errorMessage = null;
@@ -200,7 +225,10 @@ class _AdministrarDietaScreenState extends State<AdministrarDietaScreen> {
             TextButton(
               onPressed: () {
                 int? parsedQuantity = int.tryParse(quantity);
-                if (quantity.isNotEmpty && parsedQuantity != null && parsedQuantity > 0 && parsedQuantity < 999) {
+                if (quantity.isNotEmpty &&
+                    parsedQuantity != null &&
+                    parsedQuantity > 0 &&
+                    parsedQuantity < 999) {
                   print('Cantidad añadida: $quantity de $foodName');
                   Navigator.of(context).pop();
                 } else {
@@ -226,14 +254,14 @@ class _AdministrarDietaScreenState extends State<AdministrarDietaScreen> {
 void mostrarAgregarAlimentoDialog(BuildContext context) {
   showDialog(
     context: context,
-    barrierColor: Colors.black54, 
+    barrierColor: Colors.black54,
     builder: (BuildContext context) {
       return Dialog(
-        backgroundColor: Colors.transparent, 
+        backgroundColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        child: AgregarAlimentoScreen(), 
+        child: AgregarAlimentoScreen(),
       );
     },
   );
