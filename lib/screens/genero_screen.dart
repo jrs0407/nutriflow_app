@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nutriflow_app/screens/objetivo_principal_screen.dart';
 
 // Definición de los colores personalizados
 final Color secondaryGreen = Color(0xFF43A047); // Verde claro
@@ -35,8 +36,15 @@ class _GeneroScreenState extends State<GeneroScreen> {
         title: Image.asset('assets/logo.png', height: 40),
         backgroundColor: primaryGreen,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: Container(
+        // Fondo con gradiente
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFFE8F5E9), Color(0xFFC8E6C9)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -55,7 +63,7 @@ class _GeneroScreenState extends State<GeneroScreen> {
               'Este cuestionario tiene como objetivo conocer tu tipo de metabolismo y brindarte recomendaciones personalizadas.',
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.black87,
+                color: Colors.black,
               ),
             ),
             const SizedBox(height: 16),
@@ -63,7 +71,7 @@ class _GeneroScreenState extends State<GeneroScreen> {
               'Por favor, selecciona uno de los siguientes tipos de metabolismo.',
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.black87,
+                color: Colors.black,
               ),
             ),
             const SizedBox(height: 32),
@@ -102,7 +110,9 @@ class _GeneroScreenState extends State<GeneroScreen> {
                     setState(() {
                       _isChecked = value ?? false;
                     });
+                    
                   },
+                  activeColor: secondaryGreen,
                 ),
                 const Expanded(
                   child: Text(
@@ -125,24 +135,5 @@ class _GeneroScreenState extends State<GeneroScreen> {
         MaterialPageRoute(
             builder: (context) => ObjetivoPrincipalScreen(tipo: tipo)),
       );
-  }
-}
-
-class ObjetivoPrincipalScreen extends StatelessWidget {
-  final String tipo;
-
-  ObjetivoPrincipalScreen({required this.tipo});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Objetivo Principal'),
-        backgroundColor: primaryGreen,
-      ),
-      body: Center(
-        child: Text('Has seleccionado el metabolismo: $tipo'),
-      ),
-    );
   }
 }
