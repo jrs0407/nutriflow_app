@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 // Definición de los colores personalizados
-final Color verdeClaro = Color(0xFF66BB6A); // Verde claro
-final Color verdeOscuro = Color(0xFF388E3C); // Verde oscuro
-final Color rojoError = Colors.red; // Color rojo para error
+final Color secondaryGreen = Color(0xFF43A047); // Verde claro
+final Color primaryGreen = Color(0xFF2E7D32); // Verde oscuro
 
 void main() {
   runApp(MyApp());
@@ -34,7 +33,7 @@ class _GeneroScreenState extends State<GeneroScreen> {
         // Estoy contando con que el logo lo vamos a poner en assets para no tener que cogerla de internet y esperar la carga...
         // Si no se hace así, cambiar v
         title: Image.asset('assets/logo.png', height: 40),
-        backgroundColor: verdeOscuro,
+        backgroundColor: primaryGreen,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -47,7 +46,7 @@ class _GeneroScreenState extends State<GeneroScreen> {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: verdeOscuro,
+                color: primaryGreen,
               ),
             ),
             const SizedBox(height: 16),
@@ -74,7 +73,7 @@ class _GeneroScreenState extends State<GeneroScreen> {
                 onPressed:
                     _isChecked ? () => _navigateToNextScreen('femenino') : null,
                 style: TextButton.styleFrom(
-                  backgroundColor: verdeClaro,
+                  backgroundColor: secondaryGreen,
                   foregroundColor: Colors.white,
                 ),
                 child: const Text('Metabolismo Femenino'),
@@ -87,7 +86,7 @@ class _GeneroScreenState extends State<GeneroScreen> {
                     ? () => _navigateToNextScreen('masculino')
                     : null,
                 style: TextButton.styleFrom(
-                  backgroundColor: verdeClaro,
+                  backgroundColor: secondaryGreen,
                   foregroundColor: Colors.white,
                 ),
                 child: const Text('Metabolismo Masculino'),
@@ -139,7 +138,7 @@ class ObjetivoPrincipalScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Objetivo Principal'),
-        backgroundColor: verdeOscuro,
+        backgroundColor: primaryGreen,
       ),
       body: Center(
         child: Text('Has seleccionado el metabolismo: $tipo'),
