@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nutriflow_app/models/ChartData.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class Graficodehidratos extends StatefulWidget {
   const Graficodehidratos({super.key});
@@ -82,11 +83,11 @@ class _GraficodehidratosState extends State<Graficodehidratos> {
                   overflowMode: LegendItemOverflowMode.wrap,
                 ),
                 series: <CircularSeries>[
-                  PieSeries<ChartData, String>(
+                  PieSeries<Chartdata, String>(
                     dataSource: chartData,
-                    xValueMapper: (ChartData data, _) => data.x,
-                    yValueMapper: (ChartData data, _) => data.y,
-                    pointColorMapper: (ChartData data, _) => data.color,
+                    xValueMapper: (Chartdata data, _) => data.x,
+                    yValueMapper: (Chartdata data, _) => data.y,
+                    pointColorMapper: (Chartdata data, _) => data.color,
                     dataLabelSettings: const DataLabelSettings(
                       isVisible: true,
                       labelPosition: ChartDataLabelPosition.outside,
