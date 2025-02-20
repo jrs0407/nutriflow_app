@@ -54,7 +54,7 @@ class NormalScreen extends StatelessWidget {
                         proteinas: item['proteinas'],
                       ))
                   .toList();
-              return ComidaCard(titulo: titulo, comidas: comidas);
+              return Comidacard(titulo: titulo,totalCalorias: seccionComida{'total_calorias'},seccionComida{'total_grasas'},seccionComida{'total_proteinas'} comidas: comidas);
             }).toList(),
           );
         },

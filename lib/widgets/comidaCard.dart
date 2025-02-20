@@ -3,21 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:nutriflow_app/models/comidas.dart';
 
 class Comidacard extends StatelessWidget {
-  const Comidacard({super.key});
+  const Comidacard({super.key, required this.titulo, required this.total_calorias, required this.total_grasas, required this.total_proteinas, required this.comidas});
   final String titulo;
   final int total_calorias;
   final double total_grasas;
   final double total_proteinas;
   final List<Comida> comidas;
-
-  const Comidacard({
-    super.key,
-    required this.titulo,
-    required this.total_calorias,
-    required this.total_grasas,
-    required this.total_proteinas,
-    required this.comidas,
-  });
 
   @override
   Widget build(BuildContext context) {
