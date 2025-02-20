@@ -25,8 +25,8 @@ class Comidacard extends StatelessWidget {
               "$titulo - total_calorias cal",
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
-            Text(
-              "Grasas: $totalGrasas g | Proteínas: $totalProteinas g | Hidratos: $totalHidratos g",
+             Text(
+              "Grasas: ${hidratos.total_grasas} g | Proteínas: ${hidratos.total_proteinas} g | Hidratos: ${hidratos.total_hidratos} g",
               style: const TextStyle(color: Colors.grey),
             ),
             const SizedBox(height: 8),
