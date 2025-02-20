@@ -5,8 +5,8 @@ class ForgotPasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Color primaryGreen = Color(0xFF2E7D32); // Mismo color de la AppBar del login
-    const Color buttonGreen = Color(0xFF43A047);  // Mismo color para los botones
+    const Color primaryGreen = Color(0xFF2E7D32); 
+    const Color buttonGreen = Color(0xFF43A047);  
 
     return Scaffold(
       appBar: AppBar(

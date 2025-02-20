@@ -9,6 +9,7 @@ class Comida{
         nombre = json['nombre'],
         cantidad = json['cantidad'],
         calorias = json['calorias'];
+        
   
   Map<String, dynamic> toJson() => {
     'nombre': nombre,
