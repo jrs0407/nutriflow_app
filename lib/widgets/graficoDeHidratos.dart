@@ -46,9 +46,9 @@ data.forEach((key, value) {
     double porcentajeProteinas = (total_proteinas / total_hidratos) * 100;
     setState(() {
       chartData = [
-        Chartdata(x: 'Calorias', y: porcentajeCalorias, color: Colors.red),
-        Chartdata(x: 'Grasas', y: porcentajeGrasas, color: Colors.green),
-        Chartdata(x: 'Proteinas', y: porcentajeProteinas, color: Colors.blue),
+        Chartdata(x: 'Calorias', y:  double.parse(porcentajeCalorias.toStringAsFixed(1)), color: Colors.red),
+        Chartdata(x: 'Grasas', y: double.parse(porcentajeGrasas.toStringAsFixed(1)), color: Colors.green),
+        Chartdata(x: 'Proteinas', y: double.parse(porcentajeProteinas.toStringAsFixed(1)), color: Colors.blue),
       ];
     });
 
