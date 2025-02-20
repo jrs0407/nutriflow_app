@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 class HidratosDeCarbono {
   final int total_calorias;

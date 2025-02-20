@@ -4,7 +4,7 @@ import 'package:nutriflow_app/widgets/comidaCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nutriflow_app/models/comidas.dart';
-import 'package:nutriflow_app/models/hidratos_de_carbono.dart';
+
 
 class NormalScreen extends StatelessWidget {
   const NormalScreen({super.key});

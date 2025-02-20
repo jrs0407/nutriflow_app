@@ -1,13 +1,16 @@
+
 import 'package:flutter/material.dart';
 import 'package:nutriflow_app/models/comidas.dart';
 import 'package:nutriflow_app/models/hidratos_de_carbono.dart';
 
 class Comidacard extends StatelessWidget {
   const Comidacard(
-      {super.key,
+      {
+      super.key,
       required this.titulo,
       required this.hidratos,
-      required this.comidas});
+      required this.comidas
+      });
   final String titulo;
   final HidratosDeCarbono hidratos;
   final List<Comida> comidas;
@@ -22,7 +25,7 @@ class Comidacard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "$titulo - total_calorias cal",
+              "$titulo - total_calorias ${hidratos.total_calorias} cal",
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
              Text(
@@ -52,10 +55,22 @@ class Comidacard extends StatelessWidget {
                               ],
                             ),
                             Text(
-                              "${comida.calorias} cal",
+                              "${comida.calorias} calorias",
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.red),
+                            ),
+                            Text(
+                              "${comida.grasas} grasas",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue),
+                            ),
+                            Text(
+                              "${comida.proteinas} proteinas",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.orange),
                             ),
                           ],
                         ),

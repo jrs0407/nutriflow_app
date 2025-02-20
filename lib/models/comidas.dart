@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 class Comida{
   final String nombre;
