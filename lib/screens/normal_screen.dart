@@ -52,9 +52,9 @@ class NormalScreen extends StatelessWidget {
                         cantidad: item['cantidad'],
                         grasas: item['grasas'],
                         proteinas: item['proteinas'],
-                      ))
-                  .toList();
-              return Comidacard(titulo: titulo,totalCalorias: seccionComida{'total_calorias'},seccionComida{'total_grasas'},seccionComida{'total_proteinas'} comidas: comidas);
+                      )).toList();
+             return Comidacard(titulo: titulo, totalCalorias: seccionComida{'total_calorias'},totalgrasas: seccionComida{'total_proteinas'},comidas: comidas);
+
             }).toList(),
           );
         },
