@@ -54,13 +54,13 @@ class NormalScreen extends StatelessWidget {
                         grasas: item['grasas'],
                         proteinas: item['proteinas'],
                       )).toList();
-            List<HidratosDeCarbono> hidratos = (seccionComida['items'] as List).map((item) => HidratosDeCarbono(
-                        total_calorias: item['total_calorias'],
-                        total_grasas: item['total_grasas'],
-                        total_proteinas: item['total_proteinas'],
-                        total_hidratos: item['total_hidratos'],
-                      )).toList();
-             return Comidacard(titulo: titulo,comidas: comidas);
+             HidratosDeCarbono hidratos = HidratosDeCarbono(
+                total_calorias: seccionComida['total_calorias'],
+                total_grasas: seccionComida['total_grasas'].toDouble(),
+                total_proteinas: seccionComida['total_proteinas'].toDouble(),
+                total_hidratos: seccionComida['total_hidratos'].toDouble(),
+              );
+             return Comidacard(titulo: titulo,hidratos: hidratos, comidas: comidas);
 
             }).toList(),
           );
