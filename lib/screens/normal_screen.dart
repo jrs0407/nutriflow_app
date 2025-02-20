@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'package:nutriflow_app/models/hidratos_de_carbono.dart';
 import 'package:nutriflow_app/widgets/comidaCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nutriflow_app/models/comidas.dart';
+import 'package:nutriflow_app/models/hidratos_de_carbono.dart';
 
 class NormalScreen extends StatelessWidget {
   const NormalScreen({super.key});
@@ -45,15 +47,20 @@ class NormalScreen extends StatelessWidget {
               String titulo = entry.key;
               Map<String, dynamic> seccionComida = entry.value;
 
-              List<Comida> comidas = (seccionComida['items'] as List)
-                  .map((item) => Comida(
+              List<Comida> comidas = (seccionComida['items'] as List).map((item) => Comida(
                         nombre: item['nombre'],
                         calorias: item['calorias'],
                         cantidad: item['cantidad'],
                         grasas: item['grasas'],
                         proteinas: item['proteinas'],
                       )).toList();
-             return Comidacard(titulo: titulo, totalCalorias: seccionComida{'total_calorias'},totalgrasas: seccionComida{'total_proteinas'},comidas: comidas);
+            List<HidratosDeCarbono> hidratos = (seccionComida['items'] as List).map((item) => HidratosDeCarbono(
+                        total_calorias: item['total_calorias'],
+                        total_grasas: item['total_grasas'],
+                        total_proteinas: item['total_proteinas'],
+                        total_hidratos: item['total_hidratos'],
+                      )).toList();
+             return Comidacard(titulo: titulo,comidas: comidas);
 
             }).toList(),
           );
