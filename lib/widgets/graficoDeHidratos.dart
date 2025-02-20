@@ -29,13 +29,26 @@ class _GraficodehidratosState extends State<Graficodehidratos> {
     double total_hidratos = 0;
 
 data.forEach((key, value) {
-  total_hidratos += value['total_hidratos'];
-  total_calorias += value['total_calorias'];
-  total_proteinas += value['total_proteinas'];
-  total_grasas += value['total_grasas'];
+  total_hidratos += value['total_hidratos'] ?? 0;
+  total_calorias += value['total_calorias'] ?? 0;
+  total_proteinas += value['total_proteinas'] ?? 0;
+  total_grasas += value['total_grasas'] ?? 0;
 });
+
+ if (total_hidratos == 0) {
+      setState(() {
+        chartData = [];
+      });
+      return;
+    }
   double porcentajeCalorias = (total_calorias / total_hidratos) * 100;
     double porcentajeGrasas = (total_grasas / total_hidratos) * 100;
     double porcentajeProteinas = (total_proteinas / total_hidratos) * 100;
-    
+    setState(() {
+      chartData = [
+        Chartdata(x: 'Calorias', y: porcentajeCalorias, color: Colors.red),
+        Chartdata(x: 'Grasas', y: porcentajeGrasas, color: Colors.green),
+        Chartdata(x: 'Proteinas', y: porcentajeProteinas, color: Colors.blue),
+      ];
+    });
 
