@@ -4,8 +4,8 @@ class Comida{
   final String nombre;
   final String cantidad;
   final int calorias;
-  final int grasas;
-  final int proteinas;
+  final double grasas;
+  final double proteinas;
    Comida({required this.nombre, required this.calorias, required this.cantidad, required this.grasas, required this.proteinas});
 
   Comida.fromJson(Map<String, dynamic> json): 

@@ -2,6 +2,8 @@
   "diario": {
     "desayuno": {
       "total_calorias": 500,
+      "total_grasas": 1.0,
+      "total_proteinas": 27.9,
       "items": [
         { "nombre": "Strawberries - Raw", "cantidad": "1 cup, halves", "calorias": 49, "grasas": 0.5, "proteinas": 1.0 },
         { "nombre": "1 Scrambled Egg White", "cantidad": "1 egg white", "calorias": 17, "grasas": 0.1, "proteinas": 3.6 },
@@ -11,6 +13,8 @@
     },
     "almuerzo": {
       "total_calorias": 577,
+      "total_grasas": 19.7,
+      "total_proteinas": 16.2,
       "items": [
         { "nombre": "Cilantro Lime Vinaigrette Dressing", "cantidad": "2 TBSP", "calorias": 130, "grasas": 14.0, "proteinas": 0.2 },
         { "nombre": "Beans - Black, cooked, boiled, with salt", "cantidad": "1 cup", "calorias": 227, "grasas": 0.9, "proteinas": 15.2 },
@@ -20,6 +24,8 @@
     },
     "aperitivo": {
       "total_calorias": 250,
+      "total_grasas": 22.0,
+      "total_proteinas": 11.0,
       "items": [
         { "nombre": "Nueces", "cantidad": "30 g", "calorias": 180, "grasas": 18.0, "proteinas": 4.0 },
         { "nombre": "Queso bajo en grasa", "cantidad": "1 porción", "calorias": 70, "grasas": 4.0, "proteinas": 7.0 }
@@ -27,6 +33,8 @@
     },
     "merienda": {
       "total_calorias": 320,
+      "total_grasas": 8.0,
+      "total_proteinas": 8.0,
       "items": [
         { "nombre": "Yogur con frutas", "cantidad": "1 taza", "calorias": 150, "grasas": 2.0, "proteinas": 5.0 },
         { "nombre": "Galletas integrales", "cantidad": "3 unidades", "calorias": 170, "grasas": 6.0, "proteinas": 3.0 }
@@ -34,6 +42,8 @@
     },
     "cena": {
       "total_calorias": 600,
+      "total_grasas": 9.2,
+      "total_proteinas": 60.0,
       "items": [
         { "nombre": "Pechuga de pollo a la plancha", "cantidad": "150 g", "calorias": 250, "grasas": 3.0, "proteinas": 53.0 },
         { "nombre": "Ensalada mixta", "cantidad": "1 taza", "calorias": 100, "grasas": 5.0, "proteinas": 2.0 },
