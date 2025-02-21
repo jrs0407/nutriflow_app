@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nutriflow_app/screens/medidas_screen.dart';
+import 'package:nutriflow_app/screens/cuestionario_screens/medidas_screen.dart';
 
 // Definición de los colores personalizados
 final Color secondaryGreen = Color(0xFF43A047); // Verde claro

@@ -1,23 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:nutriflow_app/screens/objetivo_principal_screen.dart';
+import 'package:nutriflow_app/screens/cuestionario_screens/objetivo_principal_screen.dart';
 
 // Definición de los colores personalizados
 final Color secondaryGreen = Color(0xFF43A047); // Verde claro
 final Color primaryGreen = Color(0xFF2E7D32); // Verde oscuro
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: GeneroScreen(),
-      debugShowCheckedModeBanner: false, // Desactiva la marca de debug
-    );
-  }
-}
 
 class GeneroScreen extends StatefulWidget {
   @override
