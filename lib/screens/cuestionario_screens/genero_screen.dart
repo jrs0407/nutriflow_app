@@ -19,7 +19,7 @@ class _GeneroScreenState extends State<GeneroScreen> {
       appBar: AppBar(
         // Estoy contando con que el logo lo vamos a poner en assets para no tener que cogerla de internet y esperar la carga...
         // Si no se hace así, cambiar v
-        title: Image.asset('assets/logo.png', height: 40),
+        title: Image.asset('assets/dieta.png', height: 40),
         backgroundColor: primaryGreen,
       ),
       body: Container(

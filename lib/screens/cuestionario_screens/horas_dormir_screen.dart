@@ -36,7 +36,7 @@ class _HorasDormirScreenState extends State<HorasDormirScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/logo.png', height: 30),
+            Image.asset('assets/dieta.png', height: 30),
             const SizedBox(width: 8),
             const Text('Pregunta: 5/6'),
           ],
