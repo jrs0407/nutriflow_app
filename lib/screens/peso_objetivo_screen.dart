@@ -134,7 +134,7 @@ class _PesoObjetivoScreenState extends State<PesoObjetivoScreen> {
               ),
             ),
             const SizedBox(height: 32),
-            // Botón de continuar, que solo se habilita cuando se introduce un peso válido
+            // Botón de continuar, solo se habilita cuando se introduce un peso válido
             ElevatedButton(
               onPressed: _isValidPeso
                   ? () {
