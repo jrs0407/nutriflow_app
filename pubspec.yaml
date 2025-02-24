@@ -68,7 +68,7 @@ flutter:
    #- assets/add.png
    #- assets/dieta.png
   assets:
-    - assets/scanner.png
+    - assets/editar.png
     - assets/add.png
     - assets/dieta.png
   # An image asset can refer to one or more resolution-specific "variants", see

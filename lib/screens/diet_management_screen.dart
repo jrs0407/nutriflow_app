@@ -106,12 +106,12 @@ class _AdministrarDietaScreenState extends State<AdministrarDietaScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
-                            'assets/scanner.png',
-                            height: 24,
+                            'assets/editar.png',
+                            height: 30,
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            'Escanear un código de barras',
+                            'Editar alimento',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 14, fontWeight: FontWeight.bold),
