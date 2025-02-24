@@ -8,7 +8,7 @@ class Comidacard extends StatelessWidget {
       required this.titulo,
       required this.hidratos,
       required this.comidas});
-  
+
   final String titulo;
   final HidratosDeCarbono hidratos;
   final List<Comida> comidas;
@@ -23,11 +23,11 @@ class Comidacard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: double.infinity, 
+              width: double.infinity,
               color: Colors.green,
               padding: const EdgeInsets.all(8.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween, 
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,22 +37,21 @@ class Comidacard extends StatelessWidget {
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
-                          color: Colors.white, 
+                          color: Colors.white,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         "Grasas: ${hidratos.total_grasas} g | Proteínas: ${hidratos.total_proteinas} g | Hidratos: ${hidratos.total_hidratos} g",
                         style: const TextStyle(
-                          color: Colors.white, 
+                          color: Colors.white,
                         ),
                       ),
                     ],
                   ),
                   IconButton(
-                    icon: const Icon(Icons.add, color: Colors.white), 
-                    onPressed: () {
-                    },
+                    icon: const Icon(Icons.add, color: Colors.white),
+                    onPressed: () {},
                   ),
                 ],
               ),
@@ -79,23 +78,38 @@ class Comidacard extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            Text(
-                              "${comida.calorias} calorias",
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.red),
+                            Column(
+                              children: [
+                                Text(
+                                  "${comida.calorias} calorias",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red),
+                                      textAlign: TextAlign.center,
+                                ),
+                              ],
                             ),
-                            Text(
-                              "${comida.grasas} grasas",
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blue),
+                            Column(
+                              children: [
+                                Text(
+                                  "${comida.grasas} grasas",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.blue),
+                                      textAlign: TextAlign.center,
+                                ),
+                              ],
                             ),
-                            Text(
-                              "${comida.proteinas} proteinas",
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.orange),
+                            Column(
+                              children: [
+                                Text(
+                                  "${comida.proteinas} proteinas",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.orange),
+                                      textAlign: TextAlign.center,
+                                ),
+                              ],
                             ),
                           ],
                         ),

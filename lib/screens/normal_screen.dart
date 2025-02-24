@@ -19,32 +19,31 @@ class NormalScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green, 
+        backgroundColor: Colors.green,
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center, 
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            IconButton(
+              icon: const Icon(Icons.menu, color: Colors.white),
+              onPressed: () {},
+            ),
             Expanded(child: Container()),
             const Text(
               'Diario',
               style: TextStyle(
-                color: Colors.white, 
+                color: Colors.white,
               ),
             ),
+            Expanded(child: Container()),
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: CircleAvatar(
-                child: Text('JC', style: TextStyle(color: Colors.white)), 
+                child: Text('JC', style: TextStyle(color: Colors.white)),
                 backgroundColor: Colors.green,
               ),
             ),
           ],
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.menu, color: Colors.white), 
-            onPressed: () {},
-          ),
-        ],
       ),
       body: Container(
         color: Colors.green.shade100, 
