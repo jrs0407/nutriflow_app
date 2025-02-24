@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nutriflow_app/screens/add_food_screen.dart';
+import 'package:nutriflow_app/screens/editar_food_screen.dart';
 
 class AdministrarDietaScreen extends StatefulWidget {
   const AdministrarDietaScreen({Key? key}) : super(key: key);
@@ -101,20 +102,24 @@ class _AdministrarDietaScreenState extends State<AdministrarDietaScreen> {
                         backgroundColor: buttonDarkGreen,
                         foregroundColor: Colors.black,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        mostrarEditarAlimentoDialog(context);
+                      },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
                             'assets/editar.png',
-                            height: 30,
+                            height: 24,
                           ),
                           const SizedBox(height: 4),
                           Text(
                             'Editar alimento',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold),
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ],
                       ),
@@ -263,6 +268,21 @@ void mostrarAgregarAlimentoDialog(BuildContext context) {
           borderRadius: BorderRadius.circular(12),
         ),
         child: AgregarAlimentoScreen(),
+      );
+    },
+  );
+}
+void mostrarEditarAlimentoDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierColor: Colors.black54,
+    builder: (BuildContext context) {
+      return Dialog(
+        backgroundColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: EditarAlimentoScreen(),
       );
     },
   );
