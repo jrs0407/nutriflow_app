@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nutriflow_app/screens/diet_management_screen.dart';
+
 class AdministrarClientesScreen extends StatelessWidget {
   const AdministrarClientesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     const Color primaryGreen = Color(0xFF2E7D32);
-
-    final List<String> clientes = [
-      'Cliente 1',
-      'Cliente 2',
-      'Cliente 3',
-      'Cliente 4',
-      'Cliente 5',
-    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -30,12 +24,9 @@ class AdministrarClientesScreen extends StatelessWidget {
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: () => Navigator.pop(context),
           color: Colors.white,
         ),
-       
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -45,32 +36,65 @@ class AdministrarClientesScreen extends StatelessWidget {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: ListView.builder(
-          itemCount: clientes.length,
-          itemBuilder: (context, index) {
-            return Container(
-              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: ListTile(
-                title: Text(
-                  clientes[index],
-                  style: GoogleFonts.roboto(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                  ),
+        child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance.collection('clientes').snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+              return const Center(
+                child: Text(
+                  "No hay clientes disponibles",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AdministrarDietaScreen(),
+              );
+            }
+
+            final clientes = snapshot.data!.docs;
+
+            return ListView.builder(
+              itemCount: clientes.length,
+              itemBuilder: (context, index) {
+                final clienteData = clientes[index].data() as Map<String, dynamic>?;
+
+                final String nombreCliente = clienteData?['Nombre'] ?? 'Sin Nombre';
+
+                return Container(
+                  margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 4,
+                        offset: Offset(2, 2),
+                      ),
+                    ],
+                  ),
+                  child: ListTile(
+                    title: Text(
+                      nombreCliente,
+                      style: GoogleFonts.roboto(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  );
-                },
-              ),
+                    trailing: const Icon(Icons.arrow_forward_ios, size: 18, color: Colors.grey),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AdministrarDietaScreen(
+                            clienteId: clientes[index].id,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
             );
           },
         ),

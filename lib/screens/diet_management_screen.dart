@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nutriflow_app/screens/add_food_screen.dart';
 import 'package:nutriflow_app/screens/editar_food_screen.dart';
 
 class AdministrarDietaScreen extends StatefulWidget {
-  const AdministrarDietaScreen({Key? key}) : super(key: key);
+  final String clienteId;
+
+  const AdministrarDietaScreen({Key? key, required this.clienteId})
+      : super(key: key);
 
   @override
   _AdministrarDietaScreenState createState() => _AdministrarDietaScreenState();
 }
 
 class _AdministrarDietaScreenState extends State<AdministrarDietaScreen> {
-  final List<Map<String, dynamic>> alimentos = [
-    {'nombre': 'Pan Blanco', 'calorias': 255, 'medida': '100 g'},
-    {'nombre': 'Zanahoria', 'calorias': 41, 'medida': '100 g'},
-    {'nombre': 'Huevo', 'calorias': 63, 'medida': '1 huevo mediano'},
-    {'nombre': 'Plátano', 'calorias': 105, 'medida': '1 pieza'},
-    {'nombre': 'Aguacate', 'calorias': 160, 'medida': '100 g'},
-  ];
-
-  String? selectedMeal = 'Desayuno';
+  final ValueNotifier<String> selectedMealNotifier =
+      ValueNotifier<String>('Desayuno');
   final Color primaryGreen = Color(0xFF2E7D32);
   final Color buttonDarkGreen = Color.fromARGB(255, 187, 235, 189);
+
+  Stream<QuerySnapshot> _obtenerComidas() {
+    return FirebaseFirestore.instance.collection('comidas').snapshots();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,38 +33,43 @@ class _AdministrarDietaScreenState extends State<AdministrarDietaScreen> {
           children: [
             Container(
               width: 200,
-              child: DropdownButton<String>(
-                isExpanded: true,
-                value: selectedMeal,
-                dropdownColor: Color.fromARGB(255, 92, 136, 92),
-                items: <String>['Desayuno','Media Mañana', 'Almuerzo', 'Merienda', 'Cena']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Container(
-                      alignment: Alignment.center,
-                      child: Text(
-                        value,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
+              child: ValueListenableBuilder<String>(
+                valueListenable: selectedMealNotifier,
+                builder: (context, selectedMeal, child) {
+                  return DropdownButton<String>(
+                    isExpanded: true,
+                    value: selectedMeal,
+                    dropdownColor: Color.fromARGB(255, 92, 136, 92),
+                    items: [
+                      'Desayuno',
+                      'Media Mañana',
+                      'Almuerzo',
+                      'Merienda',
+                      'Cena'
+                    ]
+                        .map((value) => DropdownMenuItem(
+                              value: value,
+                              child: Center(
+                                child: Text(value,
+                                    style: TextStyle(color: Colors.white)),
+                              ),
+                            ))
+                        .toList(),
+                    onChanged: (newValue) {
+                      if (newValue != null) {
+                        selectedMealNotifier.value = newValue;
+                      }
+                    },
+                    icon: Icon(Icons.arrow_drop_down, color: Colors.white),
                   );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    selectedMeal = newValue;
-                  });
                 },
-                icon: Icon(Icons.arrow_drop_down, color: Colors.white),
               ),
             ),
           ],
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
         ),
       ),
       body: Container(
@@ -90,95 +95,50 @@ class _AdministrarDietaScreenState extends State<AdministrarDietaScreen> {
               onChanged: (value) {},
             ),
             const SizedBox(height: 20),
-            Text('Todos', style: TextStyle(fontWeight: FontWeight.bold)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: Container(
-                    height: 80,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: buttonDarkGreen,
-                        foregroundColor: Colors.black,
-                      ),
-                      onPressed: () {
-                        mostrarEditarAlimentoDialog(context);
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            'assets/editar.png',
-                            height: 24,
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            'Editar alimento',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Container(
-                    height: 80,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: buttonDarkGreen,
-                        foregroundColor: Colors.black,
-                      ),
-                      onPressed: () {
-                        mostrarAgregarAlimentoDialog(context);
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            'assets/add.png',
-                            height: 24,
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            'Adición rápida',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                _buildActionButton('Editar rápida', 'assets/editar.png', () {
+                  mostrarEditarAlimentoDialog(context);
+                }),
+                _buildActionButton('Adicion rápida', 'assets/add.png', () {
+                  mostrarAgregarAlimentoDialog(context);
+                }),
               ],
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: ListView.builder(
-                itemCount: alimentos.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                    child: ListTile(
-                      title: Text(alimentos[index]['nombre']),
-                      subtitle: Text(
-                          '${alimentos[index]['calorias']} cal, ${alimentos[index]['medida']}'),
-                      trailing: IconButton(
-                        icon: Icon(Icons.add),
-                        onPressed: () {
-                          _showAddQuantityDialog(alimentos[index]['nombre']);
-                        },
-                      ),
-                    ),
+              child: StreamBuilder<QuerySnapshot>(
+                stream: _obtenerComidas(), 
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                    return Center(child: Text("No hay comidas disponibles"));
+                  }
+
+                  final comidas = snapshot.data!.docs;
+                  return ListView.builder(
+                    itemCount: comidas.length,
+                    itemBuilder: (context, index) {
+                      final comida =
+                          comidas[index].data() as Map<String, dynamic>;
+                      return Card(
+                        margin: const EdgeInsets.symmetric(vertical: 8),
+                        child: ListTile(
+                          title: Text(comida['Nombre'] ?? 'Sin Nombre'),
+                          subtitle: Text(
+                              '${comida['Calorias']} cal, ${comida['Grasas']} g, ${comida['Proteinas']} p'),
+                          trailing: IconButton(
+                            icon: Icon(Icons.add),
+                            onPressed: () {
+                              _agregarComidaACliente(comida, widget.clienteId);
+                            },
+                          ),
+                        ),
+                      );
+                    },
                   );
                 },
               ),
@@ -189,99 +149,94 @@ class _AdministrarDietaScreenState extends State<AdministrarDietaScreen> {
     );
   }
 
-  void _showAddQuantityDialog(String foodName) {
-    String quantity = '';
-    String? errorMessage;
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Añadir Cantidad de $foodName'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
+  Widget _buildActionButton(
+      String text, String assetPath, VoidCallback onPressed) {
+    return Expanded(
+      child: Container(
+        height: 80,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: buttonDarkGreen,
+            foregroundColor: Colors.black,
+          ),
+          onPressed: onPressed,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextField(
-                decoration: InputDecoration(
-                  hintText: 'Cantidad',
-                  border: OutlineInputBorder(),
-                  errorText: errorMessage,
-                ),
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  quantity = value;
-                  if (value.isEmpty) {
-                    errorMessage = 'Por favor, ing resa una cantidad.';
-                  } else {
-                    int? parsedQuantity = int.tryParse(value);
-                    if (parsedQuantity == null ||
-                        parsedQuantity <= 0 ||
-                        parsedQuantity >= 999) {
-                      errorMessage = 'La cantidad debe estar entre 1 y 998.';
-                    } else {
-                      errorMessage = null;
-                    }
-                  }
-                  setState(() {});
-                },
+              Image.asset(assetPath, height: 24),
+              const SizedBox(height: 4),
+              Text(
+                text,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               ),
             ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                int? parsedQuantity = int.tryParse(quantity);
-                if (quantity.isNotEmpty &&
-                    parsedQuantity != null &&
-                    parsedQuantity > 0 &&
-                    parsedQuantity < 999) {
-                  print('Cantidad añadida: $quantity de $foodName');
-                  Navigator.of(context).pop();
-                } else {
-                  errorMessage = 'Por favor, ingresa una cantidad válida.';
-                  setState(() {});
-                }
-              },
-              child: Text('Añadir'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancelar'),
-            ),
-          ],
-        );
-      },
+        ),
+      ),
     );
+  }
+
+  Future<void> _agregarComidaACliente(
+      Map<String, dynamic> comida, String clienteId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('clientes')
+          .doc(clienteId)
+          .collection('dieta')
+          .add({
+        'nombre': comida['nombre'],
+        'cantidad': comida['cantidad'],
+        'grasas': comida['grasas'],
+        'calorias': comida['calorias'],
+        'proteinas': comida['proteinas'],
+        'tipo': selectedMealNotifier.value,
+        'fecha': DateTime.now(),
+      });
+    } catch (e) {
+      print("Error al agregar comida: $e");
+    }
   }
 }
 
 void mostrarAgregarAlimentoDialog(BuildContext context) {
-  showDialog(
+  showModalBottomSheet(
     context: context,
-    barrierColor: Colors.black54,
-    builder: (BuildContext context) {
-      return Dialog(
-        backgroundColor: Colors.transparent,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: AgregarAlimentoScreen(),
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    builder: (context) {
+      return FutureBuilder(
+        future: Future.delayed(Duration(milliseconds: 300)), 
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            return Container(
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+              ),
+              child: AgregarAlimentoScreen(),
+            );
+          }
+        },
       );
     },
   );
 }
+
+
+
+
 void mostrarEditarAlimentoDialog(BuildContext context) {
   showDialog(
     context: context,
     barrierColor: Colors.black54,
-    builder: (BuildContext context) {
+    builder: (context) {
       return Dialog(
         backgroundColor: Colors.transparent,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: EditarAlimentoScreen(),
       );
     },
