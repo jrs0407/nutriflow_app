@@ -14,9 +14,9 @@ class _AgregarAlimentoScreenState extends State<AgregarAlimentoScreen> {
   String _carbohidratos = '';
   String _proteinas = '';
 
-  String? _validarNumero(String value) {
-    if (value.isEmpty) return 'Campo requerido';
-    final number = int.tryParse(value);
+  String? _validarNumero(String? value) {
+    if (value == null || value.isEmpty) return 'Campo requerido';
+    final number = double.tryParse(value);
     if (number == null || number < 0 || number > 999) return 'Debe estar entre 0 y 999';
     return null;
   }
@@ -26,17 +26,21 @@ class _AgregarAlimentoScreenState extends State<AgregarAlimentoScreen> {
       try {
         await FirebaseFirestore.instance.collection('comidas').add({
           'Nombre': _nombre,
-          'Grasas': int.parse(_grasas),
-          'Carbohidratos': int.parse(_carbohidratos),
-          'Proteinas': int.parse(_proteinas),
-          'Calorias': (int.parse(_grasas) * 9) + (int.parse(_carbohidratos) * 4) + (int.parse(_proteinas) * 4),
+          'Grasas': double.parse(_grasas),
+          'Carbohidratos': double.parse(_carbohidratos),
+          'Proteinas': double.parse(_proteinas),
+          'Calorias': (double.parse(_grasas) * 9) +
+              (double.parse(_carbohidratos) * 4) +
+              (double.parse(_proteinas) * 4),
           'fecha': DateTime.now(),
         });
 
-        Navigator.of(context).pop();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Alimento añadido con éxito')),
-        );
+        if (mounted) {
+          Navigator.of(context).pop();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Alimento añadido con éxito')),
+          );
+        }
       } catch (e) {
         print('Error al añadir alimento: $e');
       }
@@ -62,19 +66,19 @@ class _AgregarAlimentoScreenState extends State<AgregarAlimentoScreen> {
                 decoration: InputDecoration(labelText: 'Grasas (g)'),
                 keyboardType: TextInputType.number,
                 onChanged: (value) => setState(() => _grasas = value),
-                validator: (value) => _validarNumero(value!),
+                validator: _validarNumero,
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Carbohidratos (g)'),
                 keyboardType: TextInputType.number,
                 onChanged: (value) => setState(() => _carbohidratos = value),
-                validator: (value) => _validarNumero(value!),
+                validator: _validarNumero,
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Proteínas (g)'),
                 keyboardType: TextInputType.number,
                 onChanged: (value) => setState(() => _proteinas = value),
-                validator: (value) => _validarNumero(value!),
+                validator: _validarNumero,
               ),
             ],
           ),
