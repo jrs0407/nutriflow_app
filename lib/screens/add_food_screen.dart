@@ -11,7 +11,7 @@ class _AgregarAlimentoScreenState extends State<AgregarAlimentoScreen> {
 
   String _nombre = '';
   String _grasas = '';
-  String _carbohidratos = '';
+  String _calorias = '';
   String _proteinas = '';
 
   String? _validarNumero(String? value) {
@@ -27,11 +27,8 @@ class _AgregarAlimentoScreenState extends State<AgregarAlimentoScreen> {
         await FirebaseFirestore.instance.collection('comidas').add({
           'Nombre': _nombre,
           'Grasas': double.parse(_grasas),
-          'Carbohidratos': double.parse(_carbohidratos),
           'Proteinas': double.parse(_proteinas),
-          'Calorias': (double.parse(_grasas) * 9) +
-              (double.parse(_carbohidratos) * 4) +
-              (double.parse(_proteinas) * 4),
+          'Calorias': (double.parse(_calorias)), 
           'fecha': DateTime.now(),
         });
 
@@ -69,9 +66,9 @@ class _AgregarAlimentoScreenState extends State<AgregarAlimentoScreen> {
                 validator: _validarNumero,
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Carbohidratos (g)'),
+                decoration: InputDecoration(labelText: 'Calorias (g)'),
                 keyboardType: TextInputType.number,
-                onChanged: (value) => setState(() => _carbohidratos = value),
+                onChanged: (value) => setState(() => _calorias = value),
                 validator: _validarNumero,
               ),
               TextFormField(
