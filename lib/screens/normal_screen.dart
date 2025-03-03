@@ -1,19 +1,12 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:nutriflow_app/models/hidratos_de_carbono.dart';
 import 'package:nutriflow_app/widgets/comidaCard.dart';
 import 'package:nutriflow_app/models/comidas.dart';
-//import 'package:nutriflow_app/widgets/graficodehidratos.dart';
+import 'package:nutriflow_app/services/firebase_service.dart';
+import 'package:nutriflow_app/models/hidratos_de_carbono.dart';
+import 'package:nutriflow_app/services/firebase_service.dart';
 
 class NormalScreen extends StatelessWidget {
   const NormalScreen({super.key});
-
-  Future<Map<String, dynamic>> _cargarDatos() async {
-    final String response = await rootBundle.loadString('assets/comidas.json');
-    final data = json.decode(response);
-    return data['diario'];
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +23,7 @@ class NormalScreen extends StatelessWidget {
             Expanded(child: Container()),
             const Text(
               'Diario',
-              style: TextStyle(
-                color: Colors.white,
-              ),
+              style: TextStyle(color: Colors.white),
             ),
             Expanded(child: Container()),
             const Padding(
@@ -46,47 +37,44 @@ class NormalScreen extends StatelessWidget {
         ),
       ),
       body: Container(
-        color: Colors.green.shade100, 
-        child: FutureBuilder<Map<String, dynamic>>(
-          future: _cargarDatos(),
+        color: Colors.green.shade100,
+        child: FutureBuilder<List<Comida>>(
+          future: getComidas(), // Obtiene los datos de Firebase
           builder: (context, snapshot) {
-            if (!snapshot.hasData) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             }
-            final datos = snapshot.data!;
+            if (snapshot.hasError) {
+              return const Center(child: Text("Error al cargar los datos"));
+            }
+            if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(child: Text("No hay comidas disponibles"));
+            }
+
+            final comidas = snapshot.data!;
 
             return Column(
               children: [
                 Expanded(
-                  child: ListView(
-                    children: datos.entries.map((entry) {
-                      String titulo = entry.key;
-                      Map<String, dynamic> seccionComida = entry.value;
-
-                      List<Comida> comidas = (seccionComida['items'] as List)
-                          .map((item) => Comida(
-                                nombre: item['nombre'],
-                                calorias: item['calorias'],
-                                cantidad: item['cantidad'],
-                                grasas: item['grasas'],
-                                proteinas: item['proteinas'],
-                              ))
-                          .toList();
-
+                  child: ListView.builder(
+                    itemCount: comidas.length,
+                    itemBuilder: (context, index) {
+                      final comida = comidas[index];
                       HidratosDeCarbono hidratos = HidratosDeCarbono(
-                        total_calorias: seccionComida['total_calorias'],
-                        total_grasas: seccionComida['total_grasas'].toDouble(),
-                        total_proteinas: seccionComida['total_proteinas'].toDouble(),
-                        total_hidratos: seccionComida['total_hidratos'].toDouble(),
+                        total_calorias: comida.calorias,
+                        total_grasas: comida.grasas.toDouble(),
+                        total_proteinas: comida.proteinas.toDouble(),
+                        total_hidratos: 0.0, // Ajusta esto cuando tengas los datos
                       );
 
-                      return Comidacard(titulo: titulo, hidratos: hidratos, comidas: comidas);
-                    }).toList(),
+                      return Comidacard(
+                        titulo: comida.nombre,
+                        hidratos: hidratos,
+                        comidas: [comida],
+                      );
+                    },
                   ),
                 ),
-                /*const SizedBox(height: 20), 
-                const Center(child: Graficodehidratos()), 
-                const SizedBox(height: 20), */
               ],
             );
           },

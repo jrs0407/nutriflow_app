@@ -6,31 +6,22 @@ Future<List> getComidas() async {
   List comidas = [];
   CollectionReference collectionReferenceComidas = db.collection('comidas');
 
-  QuerySnapshot queryVideojuegos = await collectionReferenceComidas.get();
+  QuerySnapshot queryComidas = await collectionReferenceComidas.get();
 
   queryComidas.docs.forEach((documento) {
     final Map<String, dynamic> data = documento.data() as Map<String, dynamic>;
     final  comida= {
       "calorias": data['calorias'],
       "grasas": data['grasas'],
-      
+      "proteinas": data['proteinas'],
       "nombre": data['nombre'],
       "uid": documento.id
     };
 
-    comidas.add(videojuego);
+    comidas.add(comida);
   });
 
-  return videojuegos;
+  return comidas;
 }
 
-Future<void> insertarVideojuego(String videojuego) async {
-  await db.collection("comidas").add({"nombre": videojuego});
-}
 
-Future<void> actualizarVideojuego( String uid, String nuevoVideojuego ) async {
-  await db.collection("videojuegos").doc(uid).set({"nombre": nuevoVideojuego});
-}
-Future<void> eliminarVideojuego( String uid ) async {
-  await db.collection("videojuegos").doc(uid).delete();
-}
