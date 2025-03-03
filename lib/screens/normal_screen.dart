@@ -64,7 +64,7 @@ class NormalScreen extends StatelessWidget {
                         total_calorias: comida.calorias,
                         total_grasas: comida.grasas.toDouble(),
                         total_proteinas: comida.proteinas.toDouble(),
-                        total_hidratos: 0.0, // Ajusta esto cuando tengas los datos
+                        total_hidratos: 0.0,
                       );
 
                       return Comidacard(

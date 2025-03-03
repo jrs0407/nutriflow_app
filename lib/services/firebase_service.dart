@@ -25,3 +25,12 @@ Future<List<Comida>> getComidas() async {
 
   return comidas;
 }
+Future<void> testFirestore() async {
+  CollectionReference collectionReferenceComidas = db.collection('comidas');
+  QuerySnapshot queryComidas = await collectionReferenceComidas.get();
+
+  for (var documento in queryComidas.docs) {
+    print(documento.data());
+  }
+}
+
