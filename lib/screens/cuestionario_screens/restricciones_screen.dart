@@ -190,7 +190,7 @@ class _RestriccionesScreenState extends State<RestriccionesScreen> {
 
   Future<void> _uploadDataToFirebase(UserData userData) async {
     try {
-      await FirebaseFirestore.instance.collection('usuarios').add({
+      await FirebaseFirestore.instance.collection('clientes').add({
         'nombre': userData.nombre,
         'gmail': userData.gmail,
         'metabolismo': userData.metabolismo,
