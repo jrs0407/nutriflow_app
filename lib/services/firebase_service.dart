@@ -1,36 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:nutriflow_app/models/comidas.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 
-Future<List<Comida>> getComidas() async {
-  List<Comida> comidas = [];
+Future<List> getComidas() async {
+  List comidas = [];
+
   CollectionReference collectionReferenceComidas = db.collection('comidas');
 
   QuerySnapshot queryComidas = await collectionReferenceComidas.get();
 
-  for (var documento in queryComidas.docs) {
+  queryComidas.docs.forEach((documento) {
     final Map<String, dynamic> data = documento.data() as Map<String, dynamic>;
-
-    final comida = Comida(
-      nombre: data['nombre'],
-      calorias: data['calorias'],
-      cantidad: data['cantidad'],
-      grasas: data['grasas'],
-      proteinas: data['proteinas'],
-    );
+    final comida = {
+      "nombre": data['Nombre'],
+      "cantidad": data['Cantidad'],
+      "calorias": data['Calorias'],
+      "grasas": data['Grasas'],
+      "proteinas": data['Proteinas'],
+      "fecha": data['fecha'].toDate(),
+      "uid_comida": documento.id,
+    };
 
     comidas.add(comida);
-  }
+  });
 
   return comidas;
 }
-Future<void> testFirestore() async {
-  CollectionReference collectionReferenceComidas = db.collection('comidas');
-  QuerySnapshot queryComidas = await collectionReferenceComidas.get();
-
-  for (var documento in queryComidas.docs) {
-    print(documento.data());
-  }
-}
-
