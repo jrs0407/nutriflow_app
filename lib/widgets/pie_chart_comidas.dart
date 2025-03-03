@@ -1,102 +1,111 @@
-/*import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:nutriflow_app/models/ChartData.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:fl_chart/fl_chart.dart';
 
-class Graficodehidratos extends StatefulWidget {
-  const Graficodehidratos({super.key});
+class PieChartComidas extends StatelessWidget {
+  final double totalCalorias;
+  final double totalProteinas;
+  final double totalGrasas;
 
-  @override
-  State<Graficodehidratos> createState() => _GraficodehidratosState();
-}
-
-class _GraficodehidratosState extends State<Graficodehidratos> {
-  List<Chartdata> chartData = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _cargarDatos();
-  }
-
-  Future<void> _cargarDatos() async {
-    final String response = await rootBundle.loadString('assets/comidas.json');
-    final Map<String, dynamic> data = json.decode(response)['diario'];
-
-    double total_calorias = 0;
-    double total_proteinas = 0;
-    double total_grasas = 0;
-    double total_hidratos = 0;
-
-    data.forEach((key, value) {
-      total_hidratos += value['total_hidratos'] ?? 0;
-      total_calorias += value['total_calorias'] ?? 0;
-      total_proteinas += value['total_proteinas'] ?? 0;
-      total_grasas += value['total_grasas'] ?? 0;
-    });
-
-    if (total_hidratos == 0) {
-      setState(() {
-        chartData = [];
-      });
-      return;
-    }
-    double porcentajeCalorias = (total_calorias / total_hidratos) * 100;
-    double porcentajeGrasas = (total_grasas / total_hidratos) * 100;
-    double porcentajeProteinas = (total_proteinas / total_hidratos) * 100;
-    setState(() {
-      chartData = [
-        Chartdata(
-            x: 'Calorias',
-            y: double.parse(porcentajeCalorias.toStringAsFixed(1)),
-            color: Colors.red),
-        Chartdata(
-            x: 'Grasas',
-            y: double.parse(porcentajeGrasas.toStringAsFixed(1)),
-            color: Colors.green),
-        Chartdata(
-            x: 'Proteinas',
-            y: double.parse(porcentajeProteinas.toStringAsFixed(1)),
-            color: Colors.blue),
-      ];
-    });
-  }
+  const PieChartComidas({
+    super.key,
+    required this.totalCalorias,
+    required this.totalProteinas,
+    required this.totalGrasas,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Gráfico de Hidratos de Carbono'),
+    return Column(
+      children: [
+        const Text(
+          "Distribución Nutricional",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 10),
+        AspectRatio(
+          aspectRatio: 1.3,
+          child: PieChart(
+            PieChartData(
+              sectionsSpace: 2,
+              centerSpaceRadius: 40,
+              borderData: FlBorderData(show: false),
+              sections: _mostrarSecciones(),
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        _buildIndicadores(),
+      ],
+    );
+  }
+
+  List<PieChartSectionData> _mostrarSecciones() {
+    return [
+      PieChartSectionData(
+        color: Colors.blue,
+        value: totalCalorias,
+        title: '${totalCalorias.toInt()} Cal',
+        radius: 60,
+        titleStyle: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
       ),
-      body: Center(
-        child: chartData.isEmpty
-            ? const CircularProgressIndicator()
-            : SfCircularChart(
-                title: const ChartTitle(
-                    text:
-                        "Relación de Calorías, Grasas y Proteínas con Hidratos (%)"),
-                legend: const Legend(
-                  isVisible: true,
-                  position: LegendPosition.bottom,
-                  overflowMode: LegendItemOverflowMode.wrap,
-                ),
-                series: <CircularSeries>[
-                  PieSeries<Chartdata, String>(
-                    dataSource: chartData,
-                    xValueMapper: (Chartdata data, _) => data.x,
-                    yValueMapper: (Chartdata data, _) => data.y,
-                    pointColorMapper: (Chartdata data, _) => data.color,
-                    dataLabelSettings: const DataLabelSettings(
-                      isVisible: true,
-                      labelPosition: ChartDataLabelPosition.outside,
-                    ),
-                  ),
-                ],
-              ),
+      PieChartSectionData(
+        color: Colors.red,
+        value: totalProteinas,
+        title: '${totalProteinas.toInt()}g Prot',
+        radius: 60,
+        titleStyle: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
       ),
+      PieChartSectionData(
+        color: Colors.green,
+        value: totalGrasas,
+        title: '${totalGrasas.toInt()}g Grasas',
+        radius: 60,
+        titleStyle: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+      ),
+    ];
+  }
+
+  Widget _buildIndicadores() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: const [
+        _Indicador(color: Colors.blue, text: 'Calorías'),
+        SizedBox(width: 10),
+        _Indicador(color: Colors.red, text: 'Proteínas'),
+        SizedBox(width: 10),
+        _Indicador(color: Colors.green, text: 'Grasas'),
+      ],
     );
   }
 }
-*/
+
+class _Indicador extends StatelessWidget {
+  final Color color;
+  final String text;
+
+  const _Indicador({required this.color, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(width: 16, height: 16, color: color),
+        const SizedBox(width: 4),
+        Text(text),
+      ],
+    );
+  }
+}
