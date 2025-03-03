@@ -1,11 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as FirebaseFireStore;
 import 'package:nutriflow_app/screens/cuestionario_screens/home_screen.dart';
+import 'package:nutriflow_app/user_data.dart';
 
 // Definición de los colores personalizados
 final Color secondaryGreen = Color(0xFF43A047); // Verde claro
 final Color primaryGreen = Color(0xFF2E7D32); // Verde oscuro
 
 class RestriccionesScreen extends StatefulWidget {
+  final UserData userData;
+
+  RestriccionesScreen({required this.userData});
+
   @override
   _RestriccionesScreenState createState() => _RestriccionesScreenState();
 }
@@ -19,15 +26,6 @@ class _RestriccionesScreenState extends State<RestriccionesScreen> {
   bool _intoleranteLactosa = false;
   bool _celiaco = false;
   bool _vegano = false;
-
-  void _navigateToHomeScreen() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => HomeScreen(),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -168,5 +166,46 @@ class _RestriccionesScreenState extends State<RestriccionesScreen> {
         ),
       ),
     );
+  }
+
+  void _navigateToHomeScreen() async {
+    widget.userData.restriccionesAlimentarias = [];
+    if (_lacteos) widget.userData.restriccionesAlimentarias!.add('Lácteos');
+    if (_mani) widget.userData.restriccionesAlimentarias!.add('Maní');
+    if (_soja) widget.userData.restriccionesAlimentarias!.add('Soja');
+    if (_intoleranteLactosa) widget.userData.restriccionesAlimentarias!.add('Intolerante a la lactosa');
+    if (_celiaco) widget.userData.restriccionesAlimentarias!.add('Celiaco');
+    if (_vegano) widget.userData.restriccionesAlimentarias!.add('Vegano');
+
+    // Subir datos a Firebase
+    await _uploadDataToFirebase(widget.userData);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HomeScreen(),
+      ),
+    );
+  }
+
+  Future<void> _uploadDataToFirebase(UserData userData) async {
+    try {
+      await FirebaseFirestore.instance.collection('usuarios').add({
+        'nombre': userData.nombre,
+        'gmail': userData.gmail,
+        'metabolismo': userData.metabolismo,
+        'horasDormir': userData.horasDormir,
+        'altura': userData.altura,
+        'edad': userData.edad,
+        'peso': userData.peso,
+        'objetivo': userData.objetivo,
+        'pesoDeseado': userData.pesoDeseado,
+        'restriccionesAlimentarias': userData.restriccionesAlimentarias,
+        'isMetric': userData.isMetric,
+      });
+      print('Datos subidos correctamente a Firebase');
+    } catch (e) {
+      print('Error al subir datos a Firebase: $e');
+    }
   }
 }

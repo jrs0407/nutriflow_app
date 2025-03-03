@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:nutriflow_app/screens/cuestionario_screens/objetivo_principal_screen.dart';
+import 'package:nutriflow_app/user_data.dart'; // Importa el modelo de datos
 
 // Definición de los colores personalizados
 final Color secondaryGreen = Color(0xFF43A047); // Verde claro
 final Color primaryGreen = Color(0xFF2E7D32); // Verde oscuro
 
 class GeneroScreen extends StatefulWidget {
+  final UserData userData;
+
+  GeneroScreen({required this.userData});
+
   @override
   _GeneroScreenState createState() => _GeneroScreenState();
 }
@@ -114,12 +119,14 @@ class _GeneroScreenState extends State<GeneroScreen> {
     );
   }
 
-  // Navega a la siguiente pantalla dependiendo de la elección
+  // Navega a la siguiente pantalla
   void _navigateToNextScreen(String tipo) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => ObjetivoPrincipalScreen(tipo: tipo)),
-      );
+    UserData userData = UserData(metabolismo: tipo);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ObjetivoPrincipalScreen(userData: userData),
+      ),
+    );
   }
 }

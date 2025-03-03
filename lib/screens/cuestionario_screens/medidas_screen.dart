@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:nutriflow_app/screens/cuestionario_screens/horas_dormir_screen.dart';
+import 'package:nutriflow_app/user_data.dart';
 
 // Definición de los colores personalizados
 final Color secondaryGreen = Color(0xFF43A047); // Verde claro
 final Color primaryGreen = Color(0xFF2E7D32); // Verde oscuro
 
 class MedidasScreen extends StatefulWidget {
-  final String objetivo;
-  final String peso;
-  final bool isMetric;
+  final UserData userData;
 
-  MedidasScreen({
-    required this.objetivo,
-    required this.peso,
-    required this.isMetric,
-  });
+  MedidasScreen({required this.userData});
 
   @override
   _MedidasScreenState createState() => _MedidasScreenState();
@@ -41,7 +36,8 @@ class _MedidasScreenState extends State<MedidasScreen> {
   @override
   void initState() {
     super.initState();
-    _isMetric = widget.isMetric;
+    _isMetric = widget.userData.isMetric ?? true; // Usa el valor almacenado o métrico por defecto
+    _pesoFocusNode.addListener(_onFocusChange);
     _pesoFocusNode.addListener(_onFocusChange);
     _alturaFocusNode.addListener(_onFocusChange);
     _edadFocusNode.addListener(_onFocusChange);
@@ -121,15 +117,6 @@ class _MedidasScreenState extends State<MedidasScreen> {
         _edadErrorMessage = '';
       });
     }
-  }
-
-  void _navigateToHorasDormirScreen() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => HorasDormirScreen(),
-      ),
-    );
   }
 
   @override
@@ -318,6 +305,18 @@ class _MedidasScreenState extends State<MedidasScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _navigateToHorasDormirScreen() {
+    widget.userData.peso = double.parse(_pesoController.text);
+    widget.userData.altura = double.parse(_alturaController.text);
+    widget.userData.edad = int.parse(_edadController.text);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HorasDormirScreen(userData: widget.userData),
       ),
     );
   }

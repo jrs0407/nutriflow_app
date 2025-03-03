@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nutriflow_app/screens/cuestionario_screens/genero_screen.dart';
-import 'package:nutriflow_app/screens/login_page.dart'; // Para usar las mismas tipografías que en login
+import 'package:nutriflow_app/screens/login_page.dart';
+import 'package:nutriflow_app/user_data.dart'; // Para usar las mismas tipografías que en login
 // import 'login_page.dart'; // Ajusta la importación de tu LoginPage real
 
 // Un ejemplo de la pantalla a la que navegas con el botón "Next"
@@ -69,7 +70,7 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  // Validación de la contraseña (igual que en tu LoginPage)
+  // Validación de la contraseña (igual que en LoginPage)
   void _validatePassword() {
     final String password = _passwordController.text;
     final bool hasUppercase = password.contains(RegExp(r'[A-Z]'));
@@ -99,10 +100,17 @@ class _RegisterPageState extends State<RegisterPage> {
     _validatePassword();
 
     // Si no hay errores, navegamos a la siguiente pantalla
+    // [!] Deberíamos enviar los datos. El usuario solo se subirá tras haber completado el cuestionario
+    // [!] (De lo contrario, tendríamos que controlar si el usuario se ha registrado pero no lo ha completado
+    // [!] lo que considero un lío inecesario)
     if (_usernameError == null && _emailError == null && _passwordError == null) {
+      UserData userData = UserData(
+        nombre: _usernameController.text,
+        gmail: _emailController.text,
+      );
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => GeneroScreen()),
+        MaterialPageRoute(builder: (context) => GeneroScreen(userData: userData)),
       );
     }
   }
@@ -330,6 +338,8 @@ class _RegisterPageState extends State<RegisterPage> {
                      Navigator.pushReplacement(
                        context,
                        MaterialPageRoute(builder: (context) => const LoginPage()),
+                       // Ahora mismo aquí hay un error porque, cuando se haga merge
+                       // se utilizará el LoginPage correcto. No preocuparse.
                      );
                   },
                   child: Text(

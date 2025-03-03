@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:nutriflow_app/screens/cuestionario_screens/restricciones_screen.dart';
+import 'package:nutriflow_app/user_data.dart';
 
 // Definición de los colores personalizados
 final Color secondaryGreen = Color(0xFF43A047); // Verde claro
 final Color primaryGreen = Color(0xFF2E7D32); // Verde oscuro
 
 class HorasDormirScreen extends StatefulWidget {
+  final UserData userData;
+
+  HorasDormirScreen({required this.userData});
+
   @override
   _HorasDormirScreenState createState() => _HorasDormirScreenState();
 }
@@ -13,15 +18,6 @@ class HorasDormirScreen extends StatefulWidget {
 class _HorasDormirScreenState extends State<HorasDormirScreen> {
   String? _selectedSleepHours;
   bool _isValidSelection = false;
-
-  void _navigateToRestriccionesScreen() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => RestriccionesScreen(),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,6 +125,16 @@ class _HorasDormirScreenState extends State<HorasDormirScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _navigateToRestriccionesScreen() {
+    widget.userData.horasDormir = _selectedSleepHours;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => RestriccionesScreen(userData: widget.userData),
       ),
     );
   }

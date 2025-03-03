@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:nutriflow_app/screens/cuestionario_screens/peso_objetivo_screen.dart';
+import 'package:nutriflow_app/user_data.dart';
 
 // Definición de los colores personalizados
 final Color secondaryGreen = Color(0xFF43A047); // Verde claro
 final Color primaryGreen = Color(0xFF2E7D32); // Verde oscuro
 
 class ObjetivoPrincipalScreen extends StatefulWidget {
-  final String tipo;
+  final UserData userData;
 
-  ObjetivoPrincipalScreen({required this.tipo});
+  ObjetivoPrincipalScreen({required this.userData});
 
   @override
   _ObjetivoPrincipalScreenState createState() =>
@@ -128,12 +129,11 @@ class _ObjetivoPrincipalScreenState extends State<ObjetivoPrincipalScreen> {
 
   // Navegar a la pantalla de "Peso Objetivo"
   void _navigateToPesoObjetivoScreen() {
+    widget.userData.objetivo = _selectedObjective;
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PesoObjetivoScreen(
-          objetivo: _selectedObjective!,
-        ),
+        builder: (context) => PesoObjetivoScreen(userData: widget.userData),
       ),
     );
   }
