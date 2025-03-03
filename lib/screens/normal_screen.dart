@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nutriflow_app/services/firebase_service.dart';
 import 'package:nutriflow_app/widgets/comidaCard.dart';
-import 'package:nutriflow_app/widgets/pie_chart_comidas.dart'; // Importa el gráfico
+import 'package:nutriflow_app/widgets/pie_chart_comidas.dart';
 
 class NormalScreen extends StatefulWidget {
   const NormalScreen({super.key});
@@ -50,16 +50,14 @@ class _NormalScreenState extends State<NormalScreen> {
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        actions: [
+        actions: const [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.0),
             child: CircleAvatar(
-              child: Text(
-                'JC',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-              ),
               backgroundColor: Colors.white,
               radius: 20,
+              child: Text('JC',style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              ),
             ),
           ),
         ],
@@ -83,9 +81,8 @@ class _NormalScreenState extends State<NormalScreen> {
             child: Column(
               children: [
                 ListView.builder(
-                  shrinkWrap: true, 
-                  physics:
-                      const NeverScrollableScrollPhysics(), 
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: comidas.length,
                   itemBuilder: (context, index) {
                     final comida = comidas[index];

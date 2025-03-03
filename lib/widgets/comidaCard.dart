@@ -22,11 +22,16 @@ class ComidaCard extends StatelessWidget {
       margin: const EdgeInsets.all(8.0),
       elevation: 5,
       child: ListTile(
-        title: Text(
-          titulo,
-          style: const TextStyle(
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
+        title: Container(
+          padding: const EdgeInsets.all(8.0),
+          color: Colors.green,
+          child: Text(
+            titulo,
+            style: const TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
           ),
         ),
         subtitle: Column(

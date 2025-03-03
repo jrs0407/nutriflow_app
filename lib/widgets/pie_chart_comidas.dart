@@ -79,9 +79,9 @@ class PieChartComidas extends StatelessWidget {
   }
 
   Widget _buildIndicadores() {
-    return Row(
+    return const Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
+      children: [
         _Indicador(color: Colors.blue, text: 'Calorías'),
         SizedBox(width: 10),
         _Indicador(color: Colors.red, text: 'Proteínas'),
