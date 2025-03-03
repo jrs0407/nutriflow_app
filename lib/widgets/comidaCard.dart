@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nutriflow_app/models/hidratos_de_carbono.dart';
 
 class ComidaCard extends StatelessWidget {
   final String titulo;
@@ -7,7 +6,6 @@ class ComidaCard extends StatelessWidget {
   final int calorias;
   final double grasas;
   final double proteinas;
-  final HidratosDeCarbono hidratos;
 
   const ComidaCard({
     super.key,
@@ -16,7 +14,6 @@ class ComidaCard extends StatelessWidget {
     required this.calorias,
     required this.grasas,
     required this.proteinas,
-    required this.hidratos,
   });
 
   @override

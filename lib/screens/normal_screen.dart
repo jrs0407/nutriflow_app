@@ -14,6 +14,8 @@ class NormalScreen extends StatelessWidget {
       body: FutureBuilder<List>(
         future: getComidas(),
         builder: (context, snapshot) {
+          print("Estado del snapshot: ${snapshot.connectionState}");  
+
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
