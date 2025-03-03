@@ -3,7 +3,7 @@ import 'package:nutriflow_app/widgets/comidaCard.dart';
 import 'package:nutriflow_app/models/comidas.dart';
 import 'package:nutriflow_app/services/firebase_service.dart';
 import 'package:nutriflow_app/models/hidratos_de_carbono.dart';
-import 'package:nutriflow_app/services/firebase_service.dart';
+
 
 class NormalScreen extends StatelessWidget {
   const NormalScreen({super.key});
@@ -39,7 +39,7 @@ class NormalScreen extends StatelessWidget {
       body: Container(
         color: Colors.green.shade100,
         child: FutureBuilder<List<Comida>>(
-          future: getComidas(), // Obtiene los datos de Firebase
+          future: getComidas(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
