@@ -4,7 +4,6 @@ import 'package:nutriflow_app/models/comidas.dart';
 import 'package:nutriflow_app/services/firebase_service.dart';
 import 'package:nutriflow_app/models/hidratos_de_carbono.dart';
 
-
 class NormalScreen extends StatelessWidget {
   const NormalScreen({super.key});
 
@@ -60,17 +59,21 @@ class NormalScreen extends StatelessWidget {
                     itemCount: comidas.length,
                     itemBuilder: (context, index) {
                       final comida = comidas[index];
+
                       HidratosDeCarbono hidratos = HidratosDeCarbono(
                         total_calorias: comida.calorias,
-                        total_grasas: comida.grasas.toDouble(),
-                        total_proteinas: comida.proteinas.toDouble(),
-                        total_hidratos: 0.0,
+                        total_grasas: comida.grasas,
+                        total_proteinas: comida.proteinas,
+                        total_hidratos: 0.0,  // Si tienes los hidratos de carbono, puedes agregarlos aquí
                       );
 
-                      return Comidacard(
+                      return ComidaCard(
                         titulo: comida.nombre,
+                        cantidad: comida.cantidad,
+                        calorias: comida.calorias,
+                        grasas: comida.grasas,
+                        proteinas: comida.proteinas,
                         hidratos: hidratos,
-                        comidas: [comida],
                       );
                     },
                   ),
